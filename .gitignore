@@ -1,0 +1,13 @@
+forum_post.md
+proposal_draft.md
+pr/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+dataset/
+*.BIN
+.DS_Store
+
