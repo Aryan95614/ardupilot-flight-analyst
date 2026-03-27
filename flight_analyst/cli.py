@@ -48,22 +48,22 @@ def _print_health(features: dict[str, Any], parser: LogParser) -> None:
     print(_kv("  X max:", f"{features.get('vibe_x_max', 'n/a')}"))
     print(_kv("  Y max:", f"{features.get('vibe_y_max', 'n/a')}"))
     print(_kv("  Z max:", f"{features.get('vibe_z_max', 'n/a')}"))
-    print(_kv("  Clip count:", f"{features.get('clips', 'n/a')}"))
+    print(_kv("  Clip count:", f"{features.get('vibe_clip_total', 'n/a')}"))
 
     print("\n  EKF")
     print(_kv("  Vel variance max:", f"{features.get('ekf_sv_max', 'n/a')}"))
     print(_kv("  Pos variance max:", f"{features.get('ekf_sp_max', 'n/a')}"))
-    print(_kv("  Fault count:", f"{features.get('ekf_fault_count', 'n/a')}"))
-    print(_kv("  Timeout count:", f"{features.get('ekf_timeout_count', 'n/a')}"))
+    print(_kv("  Fault flags:", f"{features.get('ekf_fault_flags', 'n/a')}"))
+    print(_kv("  Timeout flags:", f"{features.get('ekf_timeout_flags', 'n/a')}"))
 
     print("\n  Battery")
     print(_kv("  Voltage min:", f"{features.get('bat_volt_min', 'n/a')}"))
     print(_kv("  Current max:", f"{features.get('bat_curr_max', 'n/a')}"))
-    print(_kv("  mAh consumed:", f"{features.get('bat_mah_consumed', 'n/a')}"))
+    print(_kv("  Voltage drop rate:", f"{features.get('bat_volt_drop_rate', 'n/a')}"))
 
     print("\n  GPS")
-    print(_kv("  Fix type mode:", f"{features.get('gps_fix_mode', 'n/a')}"))
-    print(_kv("  Satellites min:", f"{features.get('gps_nsat_min', 'n/a')}"))
+    print(_kv("  Fix loss count:", f"{features.get('gps_fix_loss_count', 'n/a')}"))
+    print(_kv("  Satellites min:", f"{features.get('gps_nsats_min', 'n/a')}"))
     print(_kv("  HDop max:", f"{features.get('gps_hdop_max', 'n/a')}"))
 
     errors = parser.get_errors()

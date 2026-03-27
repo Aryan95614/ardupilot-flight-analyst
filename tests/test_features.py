@@ -16,8 +16,9 @@ from flight_analyst.features import (
 )
 
 
-def _make_msg(**kwargs) -> SimpleNamespace:
-    return SimpleNamespace(**kwargs)
+def _make_msg(**kwargs) -> dict:
+    """Create a mock message dict matching what LogParser returns."""
+    return dict(**kwargs)
 
 
 def _make_parser(messages: dict[str, list] | None = None, ekf_type: str = "NKF4"):

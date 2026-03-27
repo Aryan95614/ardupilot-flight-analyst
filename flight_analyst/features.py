@@ -107,12 +107,12 @@ class FeatureExtractor:
         if not msgs:
             return {"vibe_available": False}
 
-        ts = np.array([m.TimeUS * 1e-6 for m in msgs])
-        vx = np.array([m.VibeX for m in msgs])
-        vy = np.array([m.VibeY for m in msgs])
-        vz = np.array([m.VibeZ for m in msgs])
+        ts = np.array([m["TimeUS"] * 1e-6 for m in msgs])
+        vx = np.array([m["VibeX"] for m in msgs])
+        vy = np.array([m["VibeY"] for m in msgs])
+        vz = np.array([m["VibeZ"] for m in msgs])
         clips = np.array(
-            [getattr(m, "Clip0", 0) + getattr(m, "Clip1", 0) + getattr(m, "Clip2", 0) for m in msgs]
+            [m.get("Clip0", 0) + m.get("Clip1", 0) + m.get("Clip2", 0) for m in msgs]
         )
 
         magnitude = np.sqrt(vx**2 + vy**2 + vz**2)
@@ -149,11 +149,11 @@ class FeatureExtractor:
         if not msgs:
             return {"ekf_available": False}
 
-        ts = np.array([m.TimeUS * 1e-6 for m in msgs])
-        sv = np.array([m.SV for m in msgs])
-        sp = np.array([m.SP for m in msgs])
-        sh = np.array([m.SH for m in msgs])
-        sm = np.array([m.SM for m in msgs])
+        ts = np.array([m["TimeUS"] * 1e-6 for m in msgs])
+        sv = np.array([m["SV"] for m in msgs])
+        sp = np.array([m["SP"] for m in msgs])
+        sh = np.array([m["SH"] for m in msgs])
+        sm = np.array([m["SM"] for m in msgs])
 
         # ArduPilot default thresholds
         sv_thresh = 0.8
@@ -161,8 +161,8 @@ class FeatureExtractor:
         sh_thresh = 0.8
         sm_thresh = 0.8
 
-        fs_values = [getattr(m, "FS", 0) for m in msgs]
-        ts_values = [getattr(m, "TS", 0) for m in msgs]
+        fs_values = [m.get("FS", 0) for m in msgs]
+        ts_values = [m.get("TS", 0) for m in msgs]
 
         # OR all bitmask values across flight
         fs_union = 0
@@ -204,13 +204,13 @@ class FeatureExtractor:
         if not msgs:
             return {"att_available": False}
 
-        ts = np.array([m.TimeUS * 1e-6 for m in msgs])
-        err_rp = np.array([m.ErrRP for m in msgs])
-        err_yaw = np.array([m.ErrYaw for m in msgs])
-        roll = np.array([m.Roll for m in msgs])
-        pitch = np.array([m.Pitch for m in msgs])
-        des_roll = np.array([getattr(m, "DesRoll", 0.0) for m in msgs])
-        des_pitch = np.array([getattr(m, "DesPitch", 0.0) for m in msgs])
+        ts = np.array([m["TimeUS"] * 1e-6 for m in msgs])
+        err_rp = np.array([m["ErrRP"] for m in msgs])
+        err_yaw = np.array([m["ErrYaw"] for m in msgs])
+        roll = np.array([m["Roll"] for m in msgs])
+        pitch = np.array([m["Pitch"] for m in msgs])
+        des_roll = np.array([m.get("DesRoll", 0.0) for m in msgs])
+        des_pitch = np.array([m.get("DesPitch", 0.0) for m in msgs])
 
         roll_error = np.abs(roll - des_roll)
         pitch_error = np.abs(pitch - des_pitch)
@@ -237,9 +237,9 @@ class FeatureExtractor:
         if not msgs:
             return {"gps_available": False}
 
-        hdop = np.array([m.HDop for m in msgs])
-        nsats = np.array([m.NSats for m in msgs])
-        status = np.array([m.Status for m in msgs])
+        hdop = np.array([m["HDop"] for m in msgs])
+        nsats = np.array([m["NSats"] for m in msgs])
+        status = np.array([m["Status"] for m in msgs])
 
         fix_loss_count = 0
         for i in range(1, len(status)):
@@ -261,9 +261,9 @@ class FeatureExtractor:
         if not msgs:
             return {"bat_available": False}
 
-        ts = np.array([m.TimeUS * 1e-6 for m in msgs])
-        volt = np.array([m.Volt for m in msgs])
-        curr = np.array([m.Curr for m in msgs])
+        ts = np.array([m["TimeUS"] * 1e-6 for m in msgs])
+        volt = np.array([m["Volt"] for m in msgs])
+        curr = np.array([m["Curr"] for m in msgs])
 
         if len(ts) >= 2 and (ts[-1] - ts[0]) > 0:
             volt_drop_rate = float((volt[0] - volt[-1]) / (ts[-1] - ts[0]))
@@ -290,7 +290,7 @@ class FeatureExtractor:
         sample = msgs[0]
         for i in range(1, 17):
             attr = f"C{i}"
-            if hasattr(sample, attr):
+            if attr in sample:
                 channel_names.append(attr)
 
         if not channel_names:
@@ -298,7 +298,7 @@ class FeatureExtractor:
 
         channels: dict[str, np.ndarray] = {}
         for ch in channel_names:
-            channels[ch] = np.array([getattr(m, ch) for m in msgs])
+            channels[ch] = np.array([m[ch] for m in msgs])
 
         result: dict[str, Any] = {"motor_available": True}
 
@@ -325,7 +325,7 @@ class FeatureExtractor:
         if not msgs:
             return {"powr_available": False}
 
-        vcc = np.array([m.Vcc for m in msgs])
+        vcc = np.array([m["Vcc"] for m in msgs])
 
         brownout_threshold = 4.5
         brownout_count = int(np.sum(vcc < brownout_threshold))
@@ -344,9 +344,9 @@ class FeatureExtractor:
         if not msgs:
             return {"pm_available": False}
 
-        nlon = np.array([m.NLon for m in msgs])
-        max_t = np.array([m.MaxT for m in msgs])
-        load = np.array([getattr(m, "Load", 0) for m in msgs])
+        nlon = np.array([m["NLon"] for m in msgs])
+        max_t = np.array([m["MaxT"] for m in msgs])
+        load = np.array([m.get("Load", 0) for m in msgs])
 
         overrun_count = int(np.sum(nlon > 0))
 
@@ -367,9 +367,13 @@ class FeatureExtractor:
         if not msgs:
             return {"ctun_available": False}
 
-        tho = np.array([m.ThO for m in msgs])
-        alt = np.array([getattr(m, "Alt", 0.0) for m in msgs])
-        des_alt = np.array([getattr(m, "DAlt", 0.0) for m in msgs])
+        # Copter uses ThO, Plane uses ThrOut
+        thr_key = "ThO" if "ThO" in msgs[0] else "ThrOut" if "ThrOut" in msgs[0] else None
+        if thr_key is None:
+            return {"ctun_available": False}
+        tho = np.array([m[thr_key] for m in msgs])
+        alt = np.array([m.get("Alt", 0.0) for m in msgs])
+        des_alt = np.array([m.get("DAlt", 0.0) for m in msgs])
 
         alt_error = np.abs(alt - des_alt)
 
@@ -387,7 +391,7 @@ class FeatureExtractor:
         if not msgs:
             return {"rcin_available": False}
 
-        ch3 = np.array([getattr(m, "C3", 1500) for m in msgs])
+        ch3 = np.array([m.get("C3", 1500) for m in msgs])
 
         # std-dev of throttle as a proxy for pilot activity
         pilot_activity = float(np.std(ch3))
@@ -419,8 +423,8 @@ class FeatureExtractor:
         ekf_failsafe_count = 0
 
         for m in err_msgs:
-            subsys = int(m.Subsys)
-            ecode = int(m.ECode)
+            subsys = int(m["Subsys"])
+            ecode = int(m["ECode"])
             subsys_name = ERR_SUBSYS.get(subsys, f"Unknown({subsys})")
             decoded_errors.append(
                 {"subsys": subsys, "subsys_name": subsys_name, "ecode": ecode}
@@ -437,13 +441,13 @@ class FeatureExtractor:
 
         result["ev_count"] = len(ev_msgs)
         if ev_msgs:
-            result["ev_ids"] = [int(m.Id) for m in ev_msgs]
+            result["ev_ids"] = [int(m["Id"]) for m in ev_msgs]
         else:
             result["ev_ids"] = []
 
         result["mode_change_count"] = len(mode_msgs)
         if mode_msgs:
-            result["modes"] = [getattr(m, "Mode", None) for m in mode_msgs]
+            result["modes"] = [m.get("Mode", None) for m in mode_msgs]
         else:
             result["modes"] = []
 
@@ -455,15 +459,15 @@ class FeatureExtractor:
         if not msgs:
             return {"mag_available": False}
 
-        mx = np.array([m.MagX for m in msgs])
-        my = np.array([m.MagY for m in msgs])
-        mz = np.array([m.MagZ for m in msgs])
+        mx = np.array([m["MagX"] for m in msgs])
+        my = np.array([m["MagY"] for m in msgs])
+        mz = np.array([m["MagZ"] for m in msgs])
 
         magnitude = np.sqrt(mx**2 + my**2 + mz**2)
 
-        ofsx = np.array([getattr(m, "OfsX", 0.0) for m in msgs])
-        ofsy = np.array([getattr(m, "OfsY", 0.0) for m in msgs])
-        ofsz = np.array([getattr(m, "OfsZ", 0.0) for m in msgs])
+        ofsx = np.array([m.get("OfsX", 0.0) for m in msgs])
+        ofsy = np.array([m.get("OfsY", 0.0) for m in msgs])
+        ofsz = np.array([m.get("OfsZ", 0.0) for m in msgs])
         ofs_magnitude = np.sqrt(ofsx**2 + ofsy**2 + ofsz**2)
 
         return {

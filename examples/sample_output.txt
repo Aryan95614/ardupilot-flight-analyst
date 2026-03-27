@@ -1,0 +1,332 @@
+========================================================
+FLIGHT ANALYST TOOL - SAMPLE OUTPUT
+Log file: test.BIN (ArduPlane V3.8.2, 1.1s duration)
+Date: Thu Mar 26 21:08:33 EDT 2026
+========================================================
+
+=== COMMAND: python -m flight_analyst.cli test.BIN --health ===
+
+
+------------------------------------------------------------------------
+  Log Summary
+------------------------------------------------------------------------
+  Vehicle type:          Plane
+  Firmware:              V3.8.2
+  EKF version:           EKF2
+  Duration:              1.1s
+  Message types:         47
+
+------------------------------------------------------------------------
+  Health Summary
+------------------------------------------------------------------------
+
+  Vibration
+    X max:               0.08684472739696503
+    Y max:               0.22843439877033234
+    Z max:               0.16203604638576508
+    Clip count:          0
+
+  EKF
+    Vel variance max:    0.08
+    Pos variance max:    0.02
+    Fault flags:         []
+    Timeout flags:       ['magnetometer']
+
+  Battery
+    Voltage min:         12.387425422668457
+    Current max:         1.1660000085830688
+    Voltage drop rate:   0.0
+
+  GPS
+    Fix loss count:      0
+    Satellites min:      11
+    HDop max:            0.77
+
+  Errors/Events
+    ERR messages:        0
+    EV messages:         0
+
+=== COMMAND: python -m flight_analyst.cli test.BIN --audit ===
+
+
+------------------------------------------------------------------------
+  Log Summary
+------------------------------------------------------------------------
+  Vehicle type:          Plane
+  Firmware:              V3.8.2
+  EKF version:           EKF2
+  Duration:              1.1s
+  Message types:         47
+
+------------------------------------------------------------------------
+  Parameter Audit
+------------------------------------------------------------------------
+  No parameter warnings found. Configuration looks good.
+
+=== COMMAND: python -m flight_analyst.cli test.BIN --diagnose ===
+
+
+------------------------------------------------------------------------
+  Log Summary
+------------------------------------------------------------------------
+  Vehicle type:          Plane
+  Firmware:              V3.8.2
+  EKF version:           EKF2
+  Duration:              1.1s
+  Message types:         47
+
+------------------------------------------------------------------------
+  Diagnostic Classification
+------------------------------------------------------------------------
+  No anomalies detected. Flight appears normal.
+
+=== COMMAND: python -m flight_analyst.cli test.BIN --narrative ===
+
+
+------------------------------------------------------------------------
+  Log Summary
+------------------------------------------------------------------------
+  Vehicle type:          Plane
+  Firmware:              V3.8.2
+  EKF version:           EKF2
+  Duration:              1.1s
+  Message types:         47
+
+------------------------------------------------------------------------
+  Investigation Narrative
+------------------------------------------------------------------------
+
+  FLIGHT INVESTIGATION REPORT
+  ========================================
+
+  Aircraft:     Plane
+  Firmware:     V3.8.2
+  EKF:          EKF2
+  Duration:     1.1s
+  Warnings:     0 parameter issue(s)
+
+  TIMELINE OF ANOMALIES
+  ----------------------------------------
+  No anomalies detected during this flight.
+
+  RECOMMENDATIONS
+  ----------------------------------------
+
+
+=== COMMAND: python -m flight_analyst.cli test.BIN --json ===
+
+{
+  "log_info": {
+    "vehicle_type": "Plane",
+    "firmware": "V3.8.2",
+    "ekf_version": 2,
+    "duration_s": 1.05,
+    "message_types": [
+      "AETR",
+      "AHR2",
+      "AOA",
+      "ATT",
+      "BARO",
+      "BAT",
+      "CMD",
+      "CTUN",
+      "FMT",
+      "GPA",
+      "GPS",
+      "IMU",
+      "IMU2",
+      "MAG",
+      "MAG2",
+      "MAG3",
+      "MODE",
+      "MSG",
+      "NKF1",
+      "NKF2",
+      "NKF3",
+      "NKF4",
+      "NKF5",
+      "NKF6",
+      "NKF7",
+      "NKF8",
+      "NKF9",
+      "NKQ1",
+      "NKQ2",
+      "NTUN",
+      "ORGN",
+      "PARM",
+      "PIDP",
+      "PIDR",
+      "PIDS",
+      "PIDY",
+      "PM",
+      "POS",
+      "POWR",
+      "RAD",
+      "RCIN",
+      "RCOU",
+      "RSSI",
+      "STAT",
+      "STRT",
+      "TERR",
+      "VIBE"
+    ]
+  },
+  "features": {
+    "vibe_available": true,
+    "vibe_x_max": 0.08684472739696503,
+    "vibe_x_mean": 0.061220516005288,
+    "vibe_x_std": 0.014312089586059056,
+    "vibe_y_max": 0.22843439877033234,
+    "vibe_y_mean": 0.14878170321816983,
+    "vibe_y_std": 0.036606708873301176,
+    "vibe_z_max": 0.16203604638576508,
+    "vibe_z_mean": 0.10120230589223944,
+    "vibe_z_std": 0.026038184961985147,
+    "vibe_clip_total": 0,
+    "vibe_time_above_30": 0.0,
+    "vibe_magnitude_max_roc": 1.40521370642446,
+    "ekf_available": true,
+    "ekf_msg_type": "NKF4",
+    "ekf_sv_max": 0.08,
+    "ekf_sv_mean": 0.05625,
+    "ekf_sp_max": 0.02,
+    "ekf_sp_mean": 0.02,
+    "ekf_sh_max": 0.07,
+    "ekf_sh_mean": 0.06833333333333334,
+    "ekf_sm_max": 0.0,
+    "ekf_sm_mean": 0.0,
+    "ekf_sv_exceedance_count": 0,
+    "ekf_sp_exceedance_count": 0,
+    "ekf_sh_exceedance_count": 0,
+    "ekf_sm_exceedance_count": 0,
+    "ekf_sv_first_exceedance_time": NaN,
+    "ekf_sp_first_exceedance_time": NaN,
+    "ekf_fault_flags": [],
+    "ekf_timeout_flags": [
+      "magnetometer"
+    ],
+    "ekf_fs_raw": 0,
+    "ekf_ts_raw": 16,
+    "att_available": true,
+    "att_err_rp_max": 0.12,
+    "att_err_rp_mean": 0.10708333333333332,
+    "att_err_yaw_max": 0.0,
+    "att_err_yaw_mean": 0.0,
+    "att_roll_error_max": 7.159999999999999,
+    "att_roll_error_mean": 6.836666666666666,
+    "att_pitch_error_max": 4.96,
+    "att_pitch_error_mean": 4.8725,
+    "att_sustained_err_rp_time": 0.0,
+    "att_first_err_rp_exceedance": NaN,
+    "gps_available": true,
+    "gps_hdop_max": 0.77,
+    "gps_hdop_mean": 0.77,
+    "gps_nsats_min": 11,
+    "gps_nsats_mean": 11.0,
+    "gps_fix_loss_count": 0,
+    "bat_available": true,
+    "bat_volt_min": 12.387425422668457,
+    "bat_volt_max": 12.39941120147705,
+    "bat_volt_mean": 12.39314341545105,
+    "bat_volt_drop_rate": 0.0,
+    "bat_curr_max": 1.1660000085830688,
+    "bat_curr_mean": 1.1660000085830688,
+    "motor_available": true,
+    "motor_C1_mean": 1559.9565217391305,
+    "motor_C1_max": 1560.0,
+    "motor_C1_std": 0.20393111999232302,
+    "motor_C2_mean": 1401.8260869565217,
+    "motor_C2_max": 1402.0,
+    "motor_C2_std": 0.37903469074266727,
+    "motor_C3_mean": 1100.0,
+    "motor_C3_max": 1100.0,
+    "motor_C3_std": 0.0,
+    "motor_C4_mean": 1505.8695652173913,
+    "motor_C4_max": 1506.0,
+    "motor_C4_std": 0.33678116053977536,
+    "motor_C5_mean": 1650.0,
+    "motor_C5_max": 1650.0,
+    "motor_C5_std": 0.0,
+    "motor_C6_mean": 1579.0,
+    "motor_C6_max": 1579.0,
+    "motor_C6_std": 0.0,
+    "motor_C7_mean": 1500.0,
+    "motor_C7_max": 1500.0,
+    "motor_C7_std": 0.0,
+    "motor_C8_mean": 1500.0,
+    "motor_C8_max": 1500.0,
+    "motor_C8_std": 0.0,
+    "motor_C9_mean": 1500.0,
+    "motor_C9_max": 1500.0,
+    "motor_C9_std": 0.0,
+    "motor_C10_mean": 1500.0,
+    "motor_C10_max": 1500.0,
+    "motor_C10_std": 0.0,
+    "motor_C11_mean": 1500.0,
+    "motor_C11_max": 1500.0,
+    "motor_C11_std": 0.0,
+    "motor_C12_mean": 1500.0,
+    "motor_C12_max": 1500.0,
+    "motor_C12_std": 0.0,
+    "motor_C13_mean": 1500.0,
+    "motor_C13_max": 1500.0,
+    "motor_C13_std": 0.0,
+    "motor_C14_mean": 1500.0,
+    "motor_C14_max": 1500.0,
+    "motor_C14_std": 0.0,
+    "motor_cross_channel_spread": 119.24008131826217,
+    "motor_saturation_count": 0,
+    "powr_available": true,
+    "powr_vcc_min": 4.933886528015137,
+    "powr_vcc_mean": 4.9520140290260315,
+    "powr_vcc_std": 0.010086915951812759,
+    "powr_brownout_risk_count": 0,
+    "pm_available": true,
+    "pm_nlon_max": 2,
+    "pm_nlon_total": 2,
+    "pm_max_t_max": 34621.0,
+    "pm_max_t_mean": 34621.0,
+    "pm_load_max": 0.0,
+    "pm_load_mean": 0.0,
+    "pm_overrun_count": 1,
+    "ctun_available": true,
+    "ctun_tho_max": 0.0,
+    "ctun_tho_mean": 0.0,
+    "ctun_alt_error_max": 0.0,
+    "ctun_alt_error_mean": 0.0,
+    "rcin_available": true,
+    "rcin_pilot_activity": 0.0,
+    "rcin_throttle_mean": 968.0,
+    "rcin_failsafe_count": 0,
+    "err_available": true,
+    "err_decoded": [],
+    "err_total_count": 0,
+    "err_crash_check_count": 0,
+    "err_ekf_failsafe_count": 0,
+    "ev_count": 0,
+    "ev_ids": [],
+    "mode_change_count": 1,
+    "modes": [
+      0
+    ],
+    "mag_available": true,
+    "mag_field_max": 590.8383873784776,
+    "mag_field_min": 588.3077425973587,
+    "mag_field_mean": 589.6080097939703,
+    "mag_field_range": 2.5306447811188946,
+    "mag_interference_max": 121.29715577869086,
+    "mag_interference_mean": 121.29715577869086
+  },
+  "detections": [
+    {
+      "failure_class": "normal",
+      "confidence": 1.0,
+      "evidence": "No anomalies detected",
+      "onset_time": 0.0,
+      "is_root_cause": false,
+      "is_downstream": false,
+      "caused_by": null
+    }
+  ],
+  "parameter_warnings": []
+}
